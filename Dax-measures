@@ -1,0 +1,97 @@
+-- 1. Total Customers
+Total Customers =
+DISTINCTCOUNT(CustomerData[CustomerID])
+
+
+-- 2. Churned Customers
+Churned Customers =
+CALCULATE(
+    DISTINCTCOUNT(CustomerData[CustomerID]),
+    CustomerData[Churn] = "Yes"
+)
+
+
+-- 3. Retained Customers
+Retained Customers =
+CALCULATE(
+    DISTINCTCOUNT(CustomerData[CustomerID]),
+    CustomerData[Churn] = "No"
+)
+
+
+-- 4. Churn Rate
+Churn Rate (%) =
+DIVIDE(
+    [Churned Customers],
+    [Total Customers],
+    0
+)
+
+
+-- 5. Retention Rate
+Retention Rate (%) =
+DIVIDE(
+    [Retained Customers],
+    [Total Customers],
+    0
+)
+
+
+-- 6. Total Revenue
+Total Revenue =
+SUM(CustomerData[TotalRevenue])
+
+
+-- 7. Total Monthly Charges
+Total Monthly Charges =
+SUM(CustomerData[MonthlyCharges])
+
+
+-- 8. Average Monthly Charges
+Average Monthly Charges =
+AVERAGE(CustomerData[MonthlyCharges])
+
+
+-- 9. Churn by Contract
+Churn by Contract =
+CALCULATE(
+    DISTINCTCOUNT(CustomerData[CustomerID]),
+    CustomerData[Churn] = "Yes"
+)
+
+
+-- 10. Churn by Internet Service
+Churn by Internet Service =
+CALCULATE(
+    DISTINCTCOUNT(CustomerData[CustomerID]),
+    CustomerData[Churn] = "Yes"
+)
+
+
+-- 11. Churn Rate by Gender
+Churn Rate by Gender =
+DIVIDE(
+    CALCULATE(
+        DISTINCTCOUNT(CustomerData[CustomerID]),
+        CustomerData[Churn] = "Yes"
+    ),
+    DISTINCTCOUNT(CustomerData[CustomerID]),
+    0
+)
+
+
+-- 12. Churned Customer Revenue
+Churned Customer Revenue =
+CALCULATE(
+    SUM(CustomerData[TotalRevenue]),
+    CustomerData[Churn] = "Yes"
+)
+
+
+-- 13. Customer Status (Calculated Column)
+Customer Status =
+IF(
+    CustomerData[Churn] = "Yes",
+    "Churned",
+    "Retained"
+)
